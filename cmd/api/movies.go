@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 
-	"golang.org/x/sys/windows/svc/eventlog"
 	"greenlight.mylesmoylan.net/internal/data"
 	"greenlight.mylesmoylan.net/internal/validator"
 )
