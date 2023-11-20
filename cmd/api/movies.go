@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"time"
 
 	"greenlight.mylesmoylan.net/internal/data"
 	"greenlight.mylesmoylan.net/internal/validator"
