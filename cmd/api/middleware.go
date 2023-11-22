@@ -38,7 +38,7 @@ func (app *application) rateLimit(next http.Handler) http.Handler {
 		mu.Lock()
 
 		if _, found := clients[ip]; !found {
-			clients[ip] := rate.NewLimiter(2, 4)
+			clients[ip] = rate.NewLimiter(2, 4)
 		}
 
 		if !clients[ip].Allow() {
