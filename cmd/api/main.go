@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"greenlight.mylesmoylan.net/internal/data"
+	"greenlight.mylesmoylan.net/internal/mailer"
 
 	_ "github.com/lib/pq"
 )
@@ -19,18 +20,23 @@ type config struct {
 	host string
 	port int
 	env  string
-
 	db struct {
 		dsn			 string
 		maxOpenConns int
 		maxIdleConns int
 		maxIdleTime  time.Duration
 	}
-
 	limiter struct {
 		rps		float64
 		burst	int
 		enabled bool
+	}
+	smtp struct {
+		host	 string
+		port	 int
+		username string
+		password string
+		sender	 string
 	}
 }
 
@@ -38,6 +44,7 @@ type application struct {
 	config config
 	logger *slog.Logger
 	models data.Models
+	mailer mailer.Mailer
 }
 
 func main() {
@@ -56,6 +63,12 @@ func main() {
 	flag.IntVar(&cfg.limiter.burst, "limiter-burst", 4, "Rate limiter maximum burst")
 	flag.BoolVar(&cfg.limiter.enabled, "limiter-enabled", true, "Enable rate limiter")
 
+	flag.StringVar(&cfg.smtp.host, "smtp-host", "sandbox.smtp.mailtrap.io", "SMTP host")
+	flag.IntVar(&cfg.smtp.port, "smtp-port", 25, "SMTP port")
+	flag.StringVar(&cfg.smtp.username, "smtp-username", "7bb237cef847a7", "SMTP username")
+	flag.StringVar(&cfg.smtp.password, "smtp-password", "c42c460327ec87", "SMTP password")
+	flag.StringVar(&cfg.smtp.sender, "smtp-sender", "Greenlight <no-reply@greenlight.mylesmoylan.net>", "SMTP sender")
+
 	flag.Parse()
 
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
@@ -73,6 +86,7 @@ func main() {
 		config: cfg,
 		logger: logger,
 		models: data.NewModels(db),
+		mailer: mailer.New(cfg.smtp.host, cfg.smtp.port, cfg.smtp.username, cfg.smtp.password, cfg.smtp.sender),
 	}
 
 	err = app.serve()
