@@ -176,7 +176,7 @@ func (m UserModel) Update(user *User) error {
 	return nil
 }
 
-func (m UserModel) GetForToken(tokenScope, tokenPlaintext string) (* User, error) {
+func (m UserModel) GetForToken(tokenScope, tokenPlaintext string) (*User, error) {
 	tokenHash := sha256.Sum256([]byte(tokenPlaintext))
 
 	query := `
@@ -186,7 +186,7 @@ func (m UserModel) GetForToken(tokenScope, tokenPlaintext string) (* User, error
 		ON users.id = tokens.user_id
 		WHERE tokens.hash = $1
 		AND tokens.scope = $2
-		AND tokens.expiry = $3`
+		AND tokens.expiry > $3`
 
 	args := []any{tokenHash[:], tokenScope, time.Now()}
 
