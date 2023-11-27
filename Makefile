@@ -45,9 +45,9 @@ db/migrations/up: confirm
 # QUALITY CONTROL
 # ==================================================================================== #
 
-## audit: format, vet and test all code
+## audit: tidy dependencies and format, vet and test all code
 .PHONY: audit
-audit:
+audit: vendor
 	@printf 'Formatting code...\n'
 	go fmt ./...
 	@printf 'Vetting code...'
