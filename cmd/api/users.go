@@ -11,8 +11,8 @@ import (
 
 func (app *application) registerUserHandler(w http.ResponseWriter, r *http.Request) {
 	var input struct {
-		Name	 string `json:"name"`
-		Email	 string `json:"email"`
+		Name     string `json:"name"`
+		Email    string `json:"email"`
 		Password string `json:"password"`
 	}
 
@@ -68,7 +68,7 @@ func (app *application) registerUserHandler(w http.ResponseWriter, r *http.Reque
 	app.background(func() {
 		data := map[string]any{
 			"activationToken": token.Plaintext,
-			"userID":		   user.ID,
+			"userID":          user.ID,
 		}
 
 		err := app.mailer.Send(user.Email, "user_welcome.tmpl", data)

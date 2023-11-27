@@ -24,23 +24,23 @@ type config struct {
 	host string
 	port int
 	env  string
-	db struct {
-		dsn			 string
+	db   struct {
+		dsn          string
 		maxOpenConns int
 		maxIdleConns int
 		maxIdleTime  time.Duration
 	}
 	limiter struct {
-		rps		float64
-		burst	int
+		rps     float64
+		burst   int
 		enabled bool
 	}
 	smtp struct {
-		host	 string
-		port	 int
+		host     string
+		port     int
 		username string
 		password string
-		sender	 string
+		sender   string
 	}
 	cors struct {
 		trustedOrigins []string
@@ -52,7 +52,7 @@ type application struct {
 	logger *slog.Logger
 	models data.Models
 	mailer mailer.Mailer
-	wg	   sync.WaitGroup
+	wg     sync.WaitGroup
 }
 
 func main() {

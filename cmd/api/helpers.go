@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
-	
+
 	"greenlight.mylesmoylan.net/internal/validator"
 
 	"github.com/julienschmidt/httprouter"

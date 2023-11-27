@@ -37,7 +37,7 @@ func (app *application) rateLimit(next http.Handler) http.Handler {
 	}
 
 	var (
-		mu		sync.Mutex
+		mu      sync.Mutex
 		clients = make(map[string]*client)
 	)
 
@@ -88,7 +88,7 @@ func (app *application) rateLimit(next http.Handler) http.Handler {
 	})
 }
 
-func  (app *application) authenticate(next http.Handler) http.Handler {
+func (app *application) authenticate(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Vary", "Authorization")
 
@@ -211,8 +211,8 @@ func (app *application) enableCORS(next http.Handler) http.Handler {
 }
 
 type metricsResponseWriter struct {
-	wrapped		  http.ResponseWriter
-	statusCode	  int
+	wrapped       http.ResponseWriter
+	statusCode    int
 	headerWritten bool
 }
 
@@ -247,10 +247,10 @@ func (mw *metricsResponseWriter) Unwrap() http.ResponseWriter {
 
 func (app *application) metrics(next http.Handler) http.Handler {
 	var (
-		totalRequestsReceived			= expvar.NewInt("total_requests_received")
-		totalResponsesSent		    	= expvar.NewInt("total_responses_sent")
+		totalRequestsReceived           = expvar.NewInt("total_requests_received")
+		totalResponsesSent              = expvar.NewInt("total_responses_sent")
 		totalProcessingTimeMicroseconds = expvar.NewInt("total_processing_time_μs")
-		totalResponsesSentByStatus		= expvar.NewMap("total_responses_sent_by_status")
+		totalResponsesSentByStatus      = expvar.NewMap("total_responses_sent_by_status")
 	)
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

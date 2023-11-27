@@ -8,9 +8,9 @@ import (
 )
 
 type Filters struct {
-	Page	     int
+	Page         int
 	PageSize     int
-	Sort	     string
+	Sort         string
 	SortSafeList []string
 }
 
@@ -50,9 +50,9 @@ func ValidateFilters(v *validator.Validator, f Filters) {
 
 type Metadata struct {
 	CurrentPage  int `json:"current_page,omitempty"`
-	PageSize	 int `json:"page_size,omitempty"`
-	FirstPage	 int `json:"first_page,omitempty"`
-	LastPage	 int `json:"last_page,omitempty"`
+	PageSize     int `json:"page_size,omitempty"`
+	FirstPage    int `json:"first_page,omitempty"`
+	LastPage     int `json:"last_page,omitempty"`
 	TotalRecords int `json:"total_records,omitempty"`
 }
 
