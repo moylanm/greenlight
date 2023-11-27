@@ -1,6 +1,10 @@
 # Include variables from .envrc
 include .envrc
 
+# ==================================================================================== #
+# HELPERS
+# ==================================================================================== #
+
 ## help: print this help message
 .PHONY: help
 help:
@@ -10,6 +14,10 @@ help:
 .PHONY: confirm
 confirm:
 	@printf 'Are you sure? [y/N] ' && read ans && [ $${ans:-N} = y ]
+
+# ==================================================================================== #
+# DEVELOPMENT
+# ==================================================================================== #
 
 ## run/api: run the cmd/api application
 .PHONY: run/api
@@ -32,3 +40,21 @@ db/migrations/new:
 db/migrations/up: confirm
 	@printf 'Running up migrations...\n'
 	migrate -path ./migrations -database ${GREENLIGHT_DB_DSN} up
+
+# ==================================================================================== #
+# QUALITY CONTROL
+# ==================================================================================== #
+
+## audit: tidy dependencies and format, vet and test all code
+.PHONY: audit
+audit:
+	@printf 'Tidying and verifying module dependencies...\n'
+	go mod tidy
+	go mod verify
+	@printf 'Formatting code...\n'
+	go fmt ./...
+	@printf 'Vetting code...'
+	go vet ./...
+	staticcheck ./...
+	@printf 'Running tests...'
+	go test -race -vet=off ./...
