@@ -15,11 +15,14 @@ import (
 
 	"greenlight.mylesmoylan.net/internal/data"
 	"greenlight.mylesmoylan.net/internal/mailer"
+	"greenlight.mylesmoylan.net/internal/vcs"
 
 	_ "github.com/lib/pq"
 )
 
-const version = "1.0.0"
+var (
+	version = vcs.Version()
+)
 
 type config struct {
 	host string
