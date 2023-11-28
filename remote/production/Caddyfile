@@ -2,7 +2,7 @@
   email moylanm@oregonstate.edu
 }
 
-http://147.182.249.60 {
+147.182.249.60 {
   respond /debug/* "Not Permitted" 403
   reverse_proxy localhost:4000
 }
