@@ -50,10 +50,10 @@ db/migrations/up: confirm
 audit: vendor
 	@printf 'Formatting code...\n'
 	go fmt ./...
-	@printf 'Vetting code...'
+	@printf 'Vetting code...\n'
 	go vet ./...
 	staticcheck ./...
-	@printf 'Running tests...'
+	@printf 'Running tests...\n'
 	go test -race -vet=off ./...
 
 ## vendor: tidy and vendor dependencies
@@ -62,7 +62,7 @@ vendor:
 	@printf 'Tidying and verifying module dependencies...\n'
 	go mod tidy
 	go mod verify
-	@printf 'Vendoring dependencies...'
+	@printf 'Vendoring dependencies...\n'
 	go mod vendor
 
 # ==================================================================================== #
